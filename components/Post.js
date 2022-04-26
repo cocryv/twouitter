@@ -22,9 +22,12 @@ const Post = ({updateTweets}) => {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            updateTweets(data);
+            bodyInput.current.value = ""
         })
-
-        updateTweets(newTweet);
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     return (
@@ -32,11 +35,13 @@ const Post = ({updateTweets}) => {
             <div className='w-12 px-4'>
                 <p></p>
             </div>
-             <form className='w-full flex '>
-                <input ref={bodyInput} class="px-3 py-4 placeholder-slate-300 text-slate-600 relative bg-white rounded text-base border-0 shadow outline-none focus:outline-none focus:ring w-full" type="text" id="tweet" name="tweet" placeholder='What is happening?'/>
-                <button onClick={handleSubmit} class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Send
-                </button>
+             <form className='w-full flex flex-col '>
+                <input ref={bodyInput} className="px-3 py-4 placeholder-white text-white relative bg-twitter-dark rounded text-base border-0 outline-none focus:outline-none w-full h-8" type="text" id="tweet" name="tweet" placeholder='What is happening?'/>
+                <div className='flex justify-end pr-4 pt-4'>
+                    <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-3xl">
+                        Tweeter
+                    </button>
+                </div>
             </form> 
         </div>
     );

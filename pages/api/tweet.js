@@ -27,7 +27,13 @@ export default async function handler(req,res){
         try {
 
             const tweet = await Tweet.create(req.body);
-            res.status(201).json(tweet);
+
+            const populated = await tweet.populate([
+                'user',
+                { path: 'user'}
+              ]);
+              
+            res.status(201).json(populated);
             
         } catch (error) {
             res.status(400).json(error.toString());

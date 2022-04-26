@@ -6,11 +6,11 @@ const Timeline = ({tweets}) => {
     return (
         <div>
             {tweets ? tweets.map(tweet => (
-                <div className='flex items-center border border-gray-300'>
-                    <div className='w-12 px-4 bg-yellow-400'>
-                        {/* TODO: display profil pic */}
+                <div className='flex border border-gray-300'>
+                    <div className='pt-2 px-4'>
+                        <img className='inline-block h-9 w-full rounded-full' src="https://pbs.twimg.com/profile_images/1308769664240160770/AfgzWVE7_normal.jpg" alt="" />
                     </div>
-                    <div className='flex flex-col w-full bg-yellow-400 pt-2'>
+                    <div className='flex flex-col w-full  pt-2'>
                         <div>
                             <p>{tweet.user.name} - <span>@{tweet.user.username}</span> ~ {new Date(tweet.date).toLocaleDateString()}</p>
                         </div>

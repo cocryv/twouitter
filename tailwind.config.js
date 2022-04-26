@@ -13,6 +13,9 @@ module.exports = {
         350: "350px",
         600: "600px",
       },
+      colors: {
+        'twitter-dark': '#15202b',
+      }
     },
     container: {
       center: true,
