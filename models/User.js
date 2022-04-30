@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.Email,
         required: [true, 'Please provide an email for this user.'],
       },
+    password: {
+        type: String,
+        required: [true, 'Please provide a password for this user.'],
+      },
     bio: {
       type: String,
     },

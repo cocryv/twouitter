@@ -22,6 +22,7 @@ const Post = ({updateTweets}) => {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            data.date = JSON.stringify(data.date)
             updateTweets(data);
             bodyInput.current.value = ""
         })
