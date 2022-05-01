@@ -6,12 +6,12 @@ const secret = process.env.SECRET;
 export default function middleware(req) {
     const { cookies } = req;
 
-    const jwt = cookies.OursiteJWT;
+    const jwt = cookies.auth;
 
     const url = req.url
     const nextUrl = req.nextUrl.clone()
 
-    if(url.includes('login')) {
+    if(url.includes('/login')) {
         if(jwt){
             try {
                 verify(jwt,secret)

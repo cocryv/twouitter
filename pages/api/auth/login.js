@@ -20,7 +20,7 @@ export default async function (req,res){
         secret
         );
 
-        const serialised = serialize("OursiteJWT", token,{
+        const serialised = serialize("auth", token,{
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",
