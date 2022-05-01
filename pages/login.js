@@ -17,7 +17,7 @@ const login = () => {
         const user = await axios.post('api/auth/login',credentials)
 
         if(user.status === 200){
-            router.push("/message")
+            router.push("/")
         }
     }
 

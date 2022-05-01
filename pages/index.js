@@ -7,8 +7,11 @@ import Timeline from '../components/Timeline';
 import Tweet from '../models/Tweet';
 import User from '../models/User';
 import dbConnect from '../lib/dbConnect'
+import { useRouter } from 'next/router';
 
-export default function Home({tweets}) {
+export default function Home({tweets,connected}) {
+
+  const router = useRouter();
 
   const [allTweets,setAllTweets] = useState();
 
@@ -93,21 +96,49 @@ export default function Home({tweets}) {
                 <h1 className='pl-4 font-bold'>Home</h1>
               </div>
             </div>
-            <div className="flex justify-center items-center h-36 border border-black">
-              <Post updateTweets={updateTweets}  />
-            </div>
+            {
+              connected ? 
+              <div className="flex justify-center items-center h-36 border border-black">
+                <Post updateTweets={updateTweets}  />
+              </div> :
+            ''
+            }
             <Timeline tweets={allTweets}/>
           </div>
           <div className='hidden md:block w-290 lg:w-350 h-screen border border-black'>
           </div>
         </div>
       </div>
-      
+      {
+        !connected ? 
+        <div className='fixed left-0 bottom-0 w-full bg-blue-500 text-white py-4'>
+        <div className='flex gap-4 justify-center'>
+            <div className='flex flex-col items-center justify-center'>
+              <h2 className='font-bold text-xl'>Ne manquez pas ce qui ce passe.</h2>
+              <span>Les utilisateurs de Twitter sont les premiers à savoir.</span>
+            </div>
+            <div className='flex items-center justify-center gap-4'>
+              <button className="bg-blue-500 hover:bg-blue-700 border border-white text-white font-bold py-2 px-4 rounded-3xl">
+                <Link href="/login">
+                  Se connecter
+                </Link>
+              </button>
+              <button className="bg-white hover:bg-blue-700 border border-white text-black font-bold py-2 px-4 rounded-3xl">
+                S'inscrire
+              </button>
+            </div>
+        </div>
+      </div> :
+        ''
+      }
     </div>
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({req}) {
+
+  const connected = req.cookies.auth ? true : false
+
 
   await dbConnect()
 
@@ -127,7 +158,8 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      tweets: tweets
+      tweets: tweets,
+      connected: connected
     }, // will be passed to the page component as props
   }
 }
