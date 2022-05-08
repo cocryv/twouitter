@@ -8,8 +8,9 @@ import Tweet from '../models/Tweet';
 import User from '../models/User';
 import dbConnect from '../lib/dbConnect'
 import { useRouter } from 'next/router';
+import verifyToken from '../lib/verifyToken';
 
-export default function Home({tweets,connected}) {
+export default function Home({tweets,connected,user}) {
 
   const router = useRouter();
 
@@ -99,7 +100,7 @@ export default function Home({tweets,connected}) {
             {
               connected ? 
               <div className="flex justify-center items-center h-36 border border-black">
-                <Post updateTweets={updateTweets}  />
+                <Post updateTweets={updateTweets} user={user}  />
               </div> :
             ''
             }
@@ -124,7 +125,9 @@ export default function Home({tweets,connected}) {
                 </Link>
               </button>
               <button className="bg-white hover:bg-blue-700 border border-white text-black font-bold py-2 px-4 rounded-3xl">
-                S'inscrire
+                <Link href="/register">
+                  S'inscrire
+                </Link>
               </button>
             </div>
         </div>
@@ -137,13 +140,29 @@ export default function Home({tweets,connected}) {
 
 export async function getServerSideProps({req}) {
 
-  const connected = req.cookies.auth ? true : false
-
-
   await dbConnect()
 
-  const users = await User.find()
+  let connected;
+  let payload;
+  let user;
 
+  if(req.cookies.auth){
+    
+    let payload = verifyToken(req.cookies.auth);
+    if(payload){
+      connected = true;
+      let userQuery = await User.findOne({email: payload.username})
+
+      user = {
+        _id:userQuery.id
+      }
+    }
+  }else{
+    connected = false;
+    user = null;
+  }
+
+  console.log(user);
   /* find all the data in our database */
   const result = await Tweet.find().populate('user')
   const tweets = result.map((tweet) => ({
@@ -159,7 +178,8 @@ export async function getServerSideProps({req}) {
   return {
     props: {
       tweets: tweets,
-      connected: connected
+      connected: connected,
+      user: user
     }, // will be passed to the page component as props
   }
 }

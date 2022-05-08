@@ -14,7 +14,6 @@ export default function middleware(req) {
     if(url.includes('/login')) {
         if(jwt){
             try {
-                verify(jwt,secret)
                 return NextResponse.redirect(`${nextUrl.origin}/`);
             } catch (error) {
                 return NextResponse.redirect(`${nextUrl.origin}/login`);
@@ -28,8 +27,6 @@ export default function middleware(req) {
         }
 
         try {
-            verify(jwt,secret)
-
             return NextResponse.next();
         } catch (error) {
             return NextResponse.redirect(`${nextUrl.origin}/login`);

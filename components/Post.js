@@ -1,6 +1,6 @@
 import React, {useRef} from 'react';
 
-const Post = ({updateTweets}) => {
+const Post = ({updateTweets,user}) => {
 
     const bodyInput = useRef();
 
@@ -8,7 +8,7 @@ const Post = ({updateTweets}) => {
         e.preventDefault();
 
         const newTweet = {
-            user: "626723b035a018cc047423c6",
+            user: user._id,
             body: bodyInput.current.value,
         }
 

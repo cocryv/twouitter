@@ -3,33 +3,39 @@ import React, {useState} from 'react';
 import { useRouter } from 'next/router'
 import Head from 'next/head';
 
-const login = () => {
+const register = () => {
 
     const router = useRouter();
 
+    const [email,setEmail] = useState("");
     const [username,setUsername] = useState("");
+    const [name,setName] = useState("");
     const [password,setPassword] = useState("");
+    const [success,setSuccess] = useState("hidden")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const credentials = { username, password}
+        const credentials = { email, name, username, password}
 
-        const user = await axios.post('api/auth/login',credentials)
+        const user = await axios.post('api/user',credentials)
 
-        if(user.status === 200){
-            router.push("/")
+        if(user.status === 201){
+            setSuccess('');
         }
     }
 
     return (
         <div className=" bg-slate-800 min-h-screen flex items-center">
             <Head>
-                <title>Login to Twouitter.</title>
-                <meta name="description" content="Twouitter login" />
+                <title>Register in Twouitter.</title>
+                <meta name="description" content="Twouitter register" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className='container bg-white w-600 rounded p-5'>
+            <div className={`p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800 ${success}`} role="alert">
+            <span class="font-medium">You have been successfully registered !</span> <span className='font-bold hover:underline cursor-pointer' onClick={()=>{router.push("/login")}}>Click here to connect.</span>
+            </div>
                 <div className="flex justify-center relative">
                     <div className="absolute left-3 hover:text-red-400 cursor-pointer" onClick={()=>{router.push("/")}}>
                         X
@@ -43,14 +49,26 @@ const login = () => {
                     </div>
                 </div>
                 <div className='flex flex-col justify-center items-center'>
-                    <h1 className='text-3xl font-semibold my-5'>Connectez-vous à Twouitter</h1>
+                    <h1 className='text-3xl font-semibold my-5'>Inscrivez-vous à Twouitter</h1>
 
                     <form className="bg-white rounded px-8 pt-6 pb-8 mb-4" onSubmit={e => handleSubmit(e)}>
                         <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" for="email">
                             E-mail
                         </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" onChange={e => setUsername(e.target.value)}/>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="johndoe@gmail.com" onChange={e => setEmail(e.target.value)}/>
+                        </div>
+                        <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" for="fullname">
+                            Full name
+                        </label>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="fullname" type="text" placeholder="John Doe" onChange={e => setName(e.target.value)}/>
+                        </div>
+                        <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-bold mb-2" for="username">
+                            Username
+                        </label>
+                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="johndoee78" onChange={e => setUsername(e.target.value)}/>
                         </div>
                         <div className="mb-6">
                         <label className="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -60,7 +78,7 @@ const login = () => {
                         </div>
                         <div className="flex items-center justify-center">
                         <button className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline w-full">
-                            Sign In
+                            Register
                         </button>
                         </div>
                     </form>
@@ -70,4 +88,4 @@ const login = () => {
     );
 };
 
-export default login;
+export default register;
