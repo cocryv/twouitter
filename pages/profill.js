@@ -16,8 +16,8 @@ import Skeleton from '../components/Skeleton';
 export default function Home({tweets,connected,user}) {
 
   return(
-    <Skeleton tweets={tweets} connected={connected} user={user}>
-      <Profil/>
+    <Skeleton connected={connected} user={user}>
+      <Profil user={user}/>
     </Skeleton>
   )
 }
@@ -38,7 +38,13 @@ export async function getServerSideProps({req}) {
       let userQuery = await User.findOne({email: payload.username})
 
       user = {
-        _id:userQuery.id
+        _id:userQuery.id,
+        name:userQuery.name,
+        username:userQuery.username,
+        email:userQuery.email,
+        bio:userQuery.bio,
+        location:userQuery.location,
+        createdAt:JSON.stringify(userQuery.createdAt)
       }
     }
   }else{

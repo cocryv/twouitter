@@ -60,7 +60,8 @@ export async function getServerSideProps({req}) {
       let userQuery = await User.findOne({email: payload.username})
 
       user = {
-        _id:userQuery.id
+        _id:userQuery.id,
+        username:userQuery.username
       }
     }
   }else{

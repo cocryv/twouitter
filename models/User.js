@@ -20,9 +20,11 @@ const UserSchema = new mongoose.Schema({
       },
     bio: {
       type: String,
+      default: null
     },
     location: {
       type: String,
+      default: null
     },
     createdAt: { type: Date, default: Date.now },
 });

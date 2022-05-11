@@ -27,15 +27,15 @@ export default async function handler(req,res){
     if (method === "POST"){
         try {
 
-            let user = await User.findOne({email: req.body.email})
+            let user = await User.findOne({username: req.body.username})
             if(user) return res.status(400).send('user already exist')
 
-            user = new User(_.pick(req.body,['name','username','email','password']))
+            user = new User(_.pick(req.body,['name','username','email','password','bio','location']))
 
             user.password = await bcrypt.hash(user.password,10)
             user = await user.save();
 
-            res.status(201).send((_.pick(req.body,['_id','name','username','email'])))
+            res.status(201).send((_.pick(req.body,['_id','name','username','email','bio','location'])))
             
         } catch (error) {
 
