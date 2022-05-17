@@ -1,6 +1,6 @@
-import dbConnect from '../../lib/dbConnect'
-import User from '../../models/User';
-import Tweet from '../../models/Tweet';
+import dbConnect from '../../../lib/dbConnect'
+import User from '../../../models/User';
+import Tweet from '../../../models/Tweet';
 const bcrypt = require("bcrypt");
 const _ = require('lodash');
 
@@ -14,7 +14,7 @@ export default async function handler(req,res){
 
         try {
 
-            const users = await User.find().populate('tweets');
+            const users = await User.find();
             res.status(200).json(users);
 
         } catch (error) {

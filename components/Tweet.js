@@ -1,13 +1,19 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 const Tweet = ({tweet}) => {
     return (
-        <div className='flex border border-gray-300'>
+        <div className='flex border border-gray-700'>
                     <div className='pt-2 px-4'>
                     <Link href={`/profil/${tweet.user.username}`}>
                         <a href="">
-                            <img className='inline-block h-9 w-full rounded-full cursor-pointer' src="https://pbs.twimg.com/profile_images/1308769664240160770/AfgzWVE7_normal.jpg" alt="" />
+                            {tweet.user.profilPicture ? 
+                            <img className='inline-block h-9 w-full rounded-full cursor-pointer' src={tweet.user.profilPicture} alt="" />
+                            : <div className='inline-block h-9 w-full rounded-full cursor-pointer'>
+                                <Image src="/user.png" alt="me" width='36' height='36' className='inline-block h-9 w-full rounded-full cursor-pointer' />
+                            </div>
+                            }
                         </a>
                     </Link>
                     </div>
@@ -26,7 +32,8 @@ const Tweet = ({tweet}) => {
                                 </span> 
                             </Link>
                              ~ 
-                             {new Date(JSON.parse(tweet.date)).toLocaleDateString()}</p>
+                             {/* {new Date(JSON.parse(tweet.date)).toLocaleDateString()} */}
+                             </p>
                         </div>
                         <div className='py-2'>
                             {tweet.body}

@@ -26,6 +26,14 @@ const UserSchema = new mongoose.Schema({
       type: String,
       default: null
     },
+    profilPicture: {
+      type: String,
+      default: null
+    },
+    banner: {
+      type: String,
+      default: null
+    },
     createdAt: { type: Date, default: Date.now },
 });
 

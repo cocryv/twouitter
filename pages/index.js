@@ -34,7 +34,7 @@ export default function Home({tweets,connected,user}) {
     <Skeleton tweets={tweets} connected={connected} user={user}>
       {
         connected ? 
-        <div className="flex justify-center items-center h-36 border border-black">
+        <div className="flex justify-center items-center h-36 border-t border-gray-700">
           <Post updateTweets={updateTweets} user={user}  />
         </div> :
       ''
@@ -61,7 +61,8 @@ export async function getServerSideProps({req}) {
 
       user = {
         _id:userQuery.id,
-        username:userQuery.username
+        username:userQuery.username,
+        profilPicture: userQuery.profilPicture || null
       }
     }
   }else{
@@ -77,7 +78,8 @@ export async function getServerSideProps({req}) {
     body: tweet.body,
     user: {
       name: tweet.user.name,
-      username: tweet.user.username
+      username: tweet.user.username,
+      profilPicture: tweet.user.profilPicture || null
     },
     date: JSON.stringify(tweet.date)
   }))

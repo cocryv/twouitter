@@ -14,8 +14,10 @@ export default async function handler(req,res){
 
     if (method === "GET"){
 
+        let user = req.query.user
+
         try {
-            const tweets = await Tweet.find().populate('user');
+            const tweets = await Tweet.find({user:user}).populate('user');
             res.status(200).json(tweets);
 
         } catch (error) {

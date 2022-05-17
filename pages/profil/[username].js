@@ -40,12 +40,13 @@ export async function getServerSideProps({req,params}) {
       let userQuery = await User.findOne({email: payload.username})
 
       user = {
-        _id:userQuery.id,
-        name:userQuery.name,
-        username:userQuery.username,
-        email:userQuery.email,
-        bio:userQuery.bio,
-        location:userQuery.location,
+        _id:userQuery.id || null,
+        name:userQuery.name || null,
+        username:userQuery.username || null,
+        email:userQuery.email || null,
+        bio:userQuery.bio || null,
+        location:userQuery.location || null,
+        profilPicture:userQuery.profilPicture || null,
         createdAt:JSON.stringify(userQuery.createdAt)
       }
     }
@@ -76,6 +77,7 @@ export async function getServerSideProps({req,params}) {
             email:profil.email,
             bio:profil.bio|| null,
             location:profil.location || 'Everywhere',
+            profilPicture:profil.profilPicture || null,
             createdAt:JSON.stringify(profil.createdAt)
         }
     }else{
