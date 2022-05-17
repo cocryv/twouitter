@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Profil from './Profil';
+import { TwitterFollowButton, TwitterTimelineEmbed } from 'react-twitter-embed';
 
 const Skeleton = ({children,tweets, connected, user}) => {
     const router = useRouter();
@@ -102,6 +103,18 @@ const Skeleton = ({children,tweets, connected, user}) => {
             {children}
           </div>
           <div className='hidden md:block w-290 lg:w-350 h-screen'>
+          <div className="centerContent">
+          <div className="p-8">
+            <TwitterFollowButton
+              onLoad={function noRefCheck(){}}
+              options={{
+                size: 'large'
+              }}
+              placeholder="loading ..."
+              screenName="krezy_dev"
+            />
+          </div>
+        </div>
           </div>
         </div>
       </div>

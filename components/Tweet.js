@@ -9,8 +9,8 @@ const Tweet = ({tweet}) => {
                     <Link href={`/profil/${tweet.user.username}`}>
                         <a href="">
                             {tweet.user.profilPicture ? 
-                            <img className='inline-block h-9 w-full rounded-full cursor-pointer' src={tweet.user.profilPicture} alt="" />
-                            : <div className='inline-block h-9 w-full rounded-full cursor-pointer'>
+                            <img className='inline-block h-9 w-10 rounded-full cursor-pointer' src={tweet.user.profilPicture} alt="" />
+                            : <div className='inline-block h-9 w-10 rounded-full cursor-pointer'>
                                 <Image src="/user.png" alt="me" width='36' height='36' className='inline-block h-9 w-full rounded-full cursor-pointer' />
                             </div>
                             }
