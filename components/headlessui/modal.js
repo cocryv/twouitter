@@ -26,8 +26,7 @@ export default function MyModal({user,updateInfo}) {
 
   const uploadImage = () => {
     if (imageUpload == null){
-      alert("ups")
-      return null
+        
     }
     const imageRef = ref(storage,`${user._id}/profil_picture`);
     uploadBytes(imageRef,imageUpload).then((response)=>{
