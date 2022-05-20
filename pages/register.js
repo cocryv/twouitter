@@ -20,6 +20,7 @@ const register = () => {
 
         const user = await axios.post('api/user',credentials)
 
+        
         if(user.status === 201){
             setSuccess('');
         }
