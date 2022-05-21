@@ -23,6 +23,9 @@ const Post = ({updateTweets,user}) => {
         .then(response => response.json())
         .then(data => {
             data.date = JSON.stringify(data.date)
+            data.retweets = []
+            data.favs = []
+            data.comments = []
             updateTweets(data);
             bodyInput.current.value = ""
         })

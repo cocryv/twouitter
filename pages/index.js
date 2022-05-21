@@ -38,7 +38,7 @@ export default function Home({tweets,connected,user}) {
         </div> :
       ''
       }
-      <Timeline tweets={allTweets}/>
+      <Timeline user={user} tweets={allTweets}/>
     </Skeleton>
   )
 }
@@ -71,6 +71,7 @@ export async function getServerSideProps({req}) {
 
   /* find all the data in our database */
   const result = await Tweet.find().sort([['date', -1]]).populate('user')
+  console.log(result)
   const tweets = result.map((tweet) => ({
     _id: tweet._id.toString(),
     body: tweet.body,
@@ -79,8 +80,13 @@ export async function getServerSideProps({req}) {
       username: tweet.user.username,
       profilPicture: tweet.user.profilPicture || null
     },
+    favs: JSON.parse(JSON.stringify(tweet.favs)),
+    comments: JSON.parse(JSON.stringify(tweet.comments)),
+    retweets: JSON.parse(JSON.stringify(tweet.retweets)),
     date: JSON.stringify(tweet.date)
   }))
+  console.log(tweets)
+
 
   return {
     props: {

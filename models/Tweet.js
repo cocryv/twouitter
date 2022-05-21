@@ -33,18 +33,22 @@ const TweetSchema = new mongoose.Schema({
             date: Date 
         }
     ],
-    favs:{ 
-        user :{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User',
-        }
-    },
-    retweets:{ 
-        user :{
-            type:mongoose.Schema.Types.ObjectId,
-            ref:'User',
-        }
-    },
+    favs:[
+        { 
+            user :{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User',
+            }
+        },
+    ],
+    retweets:[
+        { 
+            user :{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'User',
+            }
+        },
+    ],
 });
 
 export default mongoose.models.Tweet || mongoose.model("Tweet",TweetSchema);
