@@ -11,7 +11,7 @@ export default function middleware(req) {
     const url = req.url
     const nextUrl = req.nextUrl.clone()
 
-    if(!(url.includes('/login'))) {
+    if((!(url.includes('/login'))) && (!(url.includes('user'))) ) {
         if(jwt === undefined){
             return NextResponse.json({error:'no token'})
         }

@@ -8,12 +8,10 @@ const ProfilTimeline = ({target}) => {
 
     const [tweets,setTweets] = useState('')
 
-
-    console.log(target)
     useEffect(async ()=>{
         const req = await axios.get(`/api/tweet?user=${target}`)
         setTweets(req.data)
-    })
+    },[])
 
     return (
         <>

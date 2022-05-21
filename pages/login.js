@@ -9,17 +9,20 @@ const login = () => {
 
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const [error,setError] = useState("hidden")
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const credentials = { username, password}
 
-        const user = await axios.post('api/auth/login',credentials)
-
-        if(user.status === 200){
-            router.push("/")
-        }
+        axios.post('api/auth/login',credentials)
+        .then(res => {
+            if(res.status === 200){
+                router.push("/")
+            }
+        })
+        .catch(error => setError(''))
     }
 
     return (
@@ -30,6 +33,9 @@ const login = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <div className='container bg-white w-600 rounded p-5'>
+            <div className={`p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 ${error}`} role="alert">
+            <span class="font-medium">Wrong login or password !</span>
+            </div>
                 <div className="flex justify-center relative">
                     <div className="absolute left-3 hover:text-red-400 cursor-pointer" onClick={()=>{router.push("/")}}>
                         X

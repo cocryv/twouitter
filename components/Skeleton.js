@@ -15,7 +15,6 @@ const Skeleton = ({children,tweets, connected, user}) => {
   useEffect(() => {
     if(tweets){
       setAllTweets(tweets);
-      console.log(tweets)
     }
   }, [])
 

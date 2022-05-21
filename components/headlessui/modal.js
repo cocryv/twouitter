@@ -5,6 +5,7 @@ import  {storage} from "../../lib/firebase"
 import {ref, uploadBytes,getDownloadURL } from "firebase/storage"
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Image from 'next/image'
 
 export default function MyModal({user,updateInfo}) {
   let [isOpen, setIsOpen] = useState(false);
@@ -24,29 +25,39 @@ export default function MyModal({user,updateInfo}) {
     setIsOpen(true)
   }
 
-  const uploadImage = () => {
+  const uploadImage = async () => {
     if (imageUpload == null){
-        
+      let _id = user._id
+      const data = {name:name, bio:bio, location:location, profilPicture:profilPicture }
+      const req = await axios.put(`/api/user/${_id}`,data)
+  
+      if(req.status === 200){
+          updateInfo(data)
+          setName(data.name)
+          setBio(data.bio)
+          setLocation(data.location)
+          closeModal()
+      }
+    }else{
+      const imageRef = ref(storage,`${user._id}/profil_picture`);
+      uploadBytes(imageRef,imageUpload).then((response)=>{
+        getDownloadURL(ref(storage, `${user._id}/profil_picture`))
+          .then(async (url) => {
+            setProfilPicture(url)
+              let _id = user._id
+              const data = {name:name, bio:bio, location:location, profilPicture:url }
+              const req = await axios.put(`/api/user/${_id}`,data)
+          
+              if(req.status === 200){
+                  updateInfo(data)
+                  setName(data.name)
+                  setBio(data.bio)
+                  setLocation(data.location)
+                  closeModal()
+              }
+          })
+      })
     }
-    const imageRef = ref(storage,`${user._id}/profil_picture`);
-    uploadBytes(imageRef,imageUpload).then((response)=>{
-      console.log(response)
-      getDownloadURL(ref(storage, `${user._id}/profil_picture`))
-        .then(async (url) => {
-          setProfilPicture(url)
-            let _id = user._id
-            const data = {name:name, bio:bio, location:location, profilPicture:url }
-            const req = await axios.put(`/api/user/${_id}`,data)
-        
-            if(req.status === 200){
-                updateInfo(data)
-                setName(data.name)
-                setBio(data.bio)
-                setLocation(data.location)
-                closeModal()
-            }
-        })
-    })
   }
 
   const handleChangeProfilPicture = (e) => {
@@ -62,7 +73,6 @@ export default function MyModal({user,updateInfo}) {
   }
 
   useEffect(()=>{
-    console.log(name)
   },[name])
 
 
@@ -113,7 +123,12 @@ export default function MyModal({user,updateInfo}) {
                         </div>
                         <div className='absolute top-48 left-8'>
                           <div className="relative">
+                            {profilPicture ? 
                             <img className='inline object-cover w-32 h-32 ml-6 rounded-full brightness-50' src={profilPicture}/>
+                            : 
+                            <div class="inline object-cover w-32 h-32 ml-6 rounded-full brightness-50">
+                                <Image src="/user.png" alt="me" width='128' height='128' className='rounded-full' />
+                            </div>}
                             <label htmlFor="profil_picture_input">
                               <div className='absolute top-2/4 left-2/4 cursor-pointer hover:text-slate-200 h-8 w-8'>
                                 <FontAwesomeIcon icon={faCamera} size='xl'/>
@@ -126,15 +141,15 @@ export default function MyModal({user,updateInfo}) {
 
                     <div class="mb-6">
                         <label for="name" class="block mb-2 text-sm font-medium dark:text-gray-300">Name</label>
-                        <input type="name" id="name" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" defaultValue={name} onChange={e => setName(e.target.value)}/>
+                        <input type="name" id="name" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={name} onChange={e => setName(e.target.value)}/>
                     </div>
                     <div class="mb-6">
                         <label for="bio" class="block mb-2 text-sm font-medium dark:text-gray-300">Bio</label>
-                        <input type="bio" id="bio" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" defaultValue={bio} onChange={e => setBio(e.target.value)}/>
+                        <input type="bio" id="bio" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={bio} onChange={e => setBio(e.target.value)}/>
                     </div>
                     <div class="mb-6">
                         <label for="location" class="block mb-2 text-sm font-medium dark:text-gray-300">Location</label>
-                        <input type="location" id="location" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" defaultValue={location} onChange={e => setLocation(e.target.value)}/>
+                        <input type="location" id="location" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={location} onChange={e => setLocation(e.target.value)}/>
                     </div>
 
                 </Dialog.Panel>

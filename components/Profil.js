@@ -2,6 +2,7 @@ import React from 'react';
 import MyModal from './headlessui/modal';
 import ProfilTimeline from './ProfilTimeline';
 import { useState } from 'react'
+import Image from 'next/image';
 
 const Profil = ({user,target}) => {
 
@@ -25,7 +26,9 @@ const Profil = ({user,target}) => {
             {profilPicture ? 
             <img class="absolute top-32 left-6 inline object-cover w-32 h-32 mr-2 rounded-full" src={profilPicture} alt="Profile image"/>
             : 
-            <div class="absolute top-32 left-6 w-32 h-32 rounded-full cursor-pointer bg-red-200 hover:bg-red-100"></div>}
+            <div class="absolute top-32 left-6 w-32 h-32 rounded-full cursor-pointer">
+                <Image src="/user.png" alt="me" width='128' height='128' className='rounded-full' />
+            </div>}
             
             <div className='flex items-end justify-end mr-4 mt-4'>
                 { user.username != target.username ?

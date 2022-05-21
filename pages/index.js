@@ -20,7 +20,6 @@ export default function Home({tweets,connected,user}) {
   useEffect(() => {
     if(tweets){
       setAllTweets(tweets);
-      console.log(tweets)
     }
   }, [])
 
@@ -70,9 +69,8 @@ export async function getServerSideProps({req}) {
     user = null;
   }
 
-  console.log(user);
   /* find all the data in our database */
-  const result = await Tweet.find().populate('user')
+  const result = await Tweet.find().sort([['date', -1]]).populate('user')
   const tweets = result.map((tweet) => ({
     _id: tweet._id.toString(),
     body: tweet.body,

@@ -1,4 +1,5 @@
 import React, {useRef} from 'react';
+import Image from 'next/image';
 
 const Post = ({updateTweets,user}) => {
 
@@ -21,13 +22,11 @@ const Post = ({updateTweets,user}) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             data.date = JSON.stringify(data.date)
             updateTweets(data);
             bodyInput.current.value = ""
         })
         .catch(err => {
-            console.log(err)
         })
     }
 

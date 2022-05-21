@@ -18,12 +18,14 @@ const register = () => {
 
         const credentials = { email, name, username, password}
 
-        const user = await axios.post('api/user',credentials)
+        axios.post('api/user',credentials)
+        .then(res => {
+            if(res.status === 201){
+                setSuccess('');
+            }
+        })
+        .catch(error => console.log(error))
 
-        
-        if(user.status === 201){
-            setSuccess('');
-        }
     }
 
     return (
