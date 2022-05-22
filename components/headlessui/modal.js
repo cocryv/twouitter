@@ -109,7 +109,7 @@ export default function MyModal({user,updateInfo}) {
                     <div className='flex justify-between mb-4'>
                         <div className='flex items-center gap-4'>
                             <div className='w-6 cursor-pointer' onClick={closeModal}>
-                                <svg viewBox='0 0 24 24' fill='white' aria-hidden="true" class="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"><g><path d="M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z"></path></g></svg>
+                                <svg viewBox='0 0 24 24' fill='white' aria-hidden="true" className="r-18jsvk2 r-4qtqp9 r-yyyyoo r-z80fyv r-dnmrzs r-bnwqim r-1plcrui r-lrvibr r-19wmn03"><g><path d="M13.414 12l5.793-5.793c.39-.39.39-1.023 0-1.414s-1.023-.39-1.414 0L12 10.586 6.207 4.793c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L10.586 12l-5.793 5.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293L12 13.414l5.793 5.793c.195.195.45.293.707.293s.512-.098.707-.293c.39-.39.39-1.023 0-1.414L13.414 12z"></path></g></svg>
                             </div>
                             <h2 className='font-bold text-xl'>Edit profile</h2>
                         </div>
@@ -126,7 +126,7 @@ export default function MyModal({user,updateInfo}) {
                             {profilPicture ? 
                             <img className='inline object-cover w-32 h-32 ml-6 rounded-full brightness-50' src={profilPicture}/>
                             : 
-                            <div class="inline object-cover w-32 h-32 ml-6 rounded-full brightness-50">
+                            <div className="inline object-cover w-32 h-32 ml-6 rounded-full brightness-50">
                                 <Image src="/user.png" alt="me" width='128' height='128' className='rounded-full' />
                             </div>}
                             <label htmlFor="profil_picture_input">
@@ -136,20 +136,19 @@ export default function MyModal({user,updateInfo}) {
                             </label>
                           </div>
                         </div>
-                        {/* <img class="absolute top-48 left-8 inline object-cover w-32 h-32 mr-2 rounded-full" src={profilPicture} alt="Profile image"/> */}
                     </div>
 
-                    <div class="mb-6">
-                        <label for="name" class="block mb-2 text-sm font-medium dark:text-gray-300">Name</label>
-                        <input type="name" id="name" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={name} onChange={e => setName(e.target.value)}/>
+                    <div className="mb-6">
+                        <label for="name" className="block mb-2 text-sm font-medium dark:text-gray-300">Name</label>
+                        <input type="name" id="name" className="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={name} onChange={e => setName(e.target.value)}/>
                     </div>
-                    <div class="mb-6">
-                        <label for="bio" class="block mb-2 text-sm font-medium dark:text-gray-300">Bio</label>
-                        <input type="bio" id="bio" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={bio} onChange={e => setBio(e.target.value)}/>
+                    <div className="mb-6">
+                        <label for="bio" className="block mb-2 text-sm font-medium dark:text-gray-300">Bio</label>
+                        <input type="bio" id="bio" className="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={bio} onChange={e => setBio(e.target.value)}/>
                     </div>
-                    <div class="mb-6">
-                        <label for="location" class="block mb-2 text-sm font-medium dark:text-gray-300">Location</label>
-                        <input type="location" id="location" class="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={location} onChange={e => setLocation(e.target.value)}/>
+                    <div className="mb-6">
+                        <label for="location" className="block mb-2 text-sm font-medium dark:text-gray-300">Location</label>
+                        <input type="location" id="location" className="bg-twitter-dark border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" defaultValue={location} onChange={e => setLocation(e.target.value)}/>
                     </div>
 
                 </Dialog.Panel>

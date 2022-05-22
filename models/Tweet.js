@@ -30,7 +30,10 @@ const TweetSchema = new mongoose.Schema({
                 type: String,
                 required: [true, 'Please provide a body for this tweet.'],
               },
-            date: Date 
+            date: { 
+                type: Date,
+                default: Date.now
+            },
         }
     ],
     favs:[

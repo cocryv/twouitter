@@ -24,7 +24,7 @@ export default function Home({tweets,connected,user}) {
   }, [])
 
   const updateTweets = (tweet) => {
-    let newTab = [...allTweets, tweet];
+    let newTab = [tweet,...allTweets];
     setAllTweets(newTab);
   }
   

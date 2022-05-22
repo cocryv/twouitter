@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react';
 import Post from '../../components/Post';
 import Timeline from '../../components/Timeline';
+import Tweet from '../../models/Tweet';
 import User from '../../models/User';
 import dbConnect from '../../lib/dbConnect'
 import { useRouter } from 'next/router';
@@ -11,25 +12,27 @@ import verifyToken from '../../lib/verifyToken';
 import Profil from '../../components/Profil';
 import ProfilTimeline from '../../components/ProfilTimeline';
 import Skeleton from '../../components/Skeleton';
+import TweetDetail from '../../components/TweetDetail';
 
-export default function username({connected,user,target}) {
+export default function username({tweet,connected,user,target}) {
 
   return(
     <Skeleton connected={connected} user={user}>
-      <Profil user={user} target={target}/>
+      <TweetDetail user={user} tweet={tweet}/>
     </Skeleton>
   )
 }
 
 export async function getServerSideProps({req,params}) {
 
-    console.log(params.username)
+  console.log(params.id)
   await dbConnect()
 
   let connected;
   let payload;
   let user;
   let target;
+  let tweet;
 
   if(req.cookies.auth){
     
@@ -54,23 +57,43 @@ export async function getServerSideProps({req,params}) {
     user = null;
   }
 
-    const profil = await User.findOne({username: params.username }).populate('follows.user')
-    console.log(profil)
-    let followers = await User.find({follows: profil})
-    if(profil != null){
-        target = {
-            _id:profil.id,
-            name:profil.name,
-            username:profil.username,
-            email:profil.email,
-            bio:profil.bio|| null,
-            location:profil.location || 'Everywhere',
-            profilPicture:profil.profilPicture || null,
-            followings: JSON.parse(JSON.stringify(profil.follows)),
-            followers: JSON.parse(JSON.stringify(followers)),
-            createdAt:JSON.stringify(profil.createdAt)
-        } 
-
+  console.log(user);
+  /* find all the data in our database */
+//   const result = await Tweet.find().populate('user')
+//   const tweets = result.map((tweet) => ({
+//     _id: tweet._id.toString(),
+//     body: tweet.body,
+//     user: {
+//       name: tweet.user.name,
+//       username: tweet.user.username
+//     },
+//     date: JSON.stringify(tweet.date)
+//   }))
+    const data = await Tweet.findOne({_id: params.id }).populate([
+        { 
+            path: 'comments',
+            populate: {
+              path: 'user',
+              model: 'User'
+            } 
+         },
+         'user'
+    ])
+    console.log(data)
+    if(data != null){
+        tweet = {
+            _id: data._id.toString(),
+            body: data.body,
+            user: {
+              name: data.user.name,
+              username: data.user.username,
+              profilPicture:data.user.profilPicture || null,
+            },
+            date: JSON.stringify(data.date),
+            favs: JSON.parse(JSON.stringify(data.favs)),
+            comments: JSON.parse(JSON.stringify(data.comments)),
+            retweets: JSON.parse(JSON.stringify(data.retweets)),
+        }
     }else{
         return {
             redirect: {
@@ -82,9 +105,9 @@ export async function getServerSideProps({req,params}) {
 
   return {
     props: {
+      tweet: tweet,
       connected: connected,
       user: user,
-      target: target
     }, // will be passed to the page component as props
   }
 }

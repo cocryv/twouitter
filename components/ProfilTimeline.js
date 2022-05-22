@@ -3,7 +3,7 @@ import React, {useEffect,useState} from 'react';
 import { Oval } from 'react-loader-spinner';
 import Tweet from './Tweet';
 
-const ProfilTimeline = ({target}) => {
+const ProfilTimeline = ({target,user}) => {
 
 
     const [tweets,setTweets] = useState('')
@@ -46,7 +46,7 @@ const ProfilTimeline = ({target}) => {
                 
             </div>
             {tweets ? tweets.map(tweet => (
-                <Tweet tweet={tweet}/>
+                <Tweet user={user} tweet={tweet}/>
             )) : 
             <div className="flex items-center justify-center">
             <Oval
