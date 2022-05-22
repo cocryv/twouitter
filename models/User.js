@@ -34,13 +34,18 @@ const UserSchema = new mongoose.Schema({
       type: String,
       default: null
     },
-    follows:[
+    follows: [
       { 
           user :{
               type:mongoose.Schema.Types.ObjectId,
               ref:'User',
-          }
-      },
+              required: [true, 'Please provide an user for this comment.'],
+          },
+          date: { 
+              type: Date,
+              default: Date.now
+          },
+      }
   ],
     createdAt: { type: Date, default: Date.now },
 });

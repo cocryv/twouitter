@@ -18,6 +18,8 @@ const Profil = ({user,target}) => {
         setProfilPicture(data.profilPicture)
     }
 
+    console.log(target)
+
     return (
         <div className='relative'>
             <div className='w-full h-48 bg-slate-400'>
@@ -53,10 +55,10 @@ const Profil = ({user,target}) => {
                 </div>
                 <div className='flex flex-row mt-4 gap-4'>
                     <div>
-                        <span className='font-bold'>46</span> following
+                        <span className='font-bold'>{target.followings.length}</span> following
                     </div>
                     <div>
-                        <span className='font-bold'>32</span> followers
+                        <span className='font-bold'>{target.followers.length}</span> followers
                     </div>
                 </div>
             </div>

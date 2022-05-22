@@ -42,7 +42,7 @@ export default async function handler(req,res){
     if (method === "GET"){
         try {
 
-            let user = await User.findById(id)
+            let user = await User.findById(id).populate('follows.user')
 
             return res.status(200).json(user)
 

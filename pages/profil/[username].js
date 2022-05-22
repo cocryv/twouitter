@@ -55,7 +55,6 @@ export async function getServerSideProps({req,params}) {
   }
 
     const profil = await User.findOne({username: params.username }).populate('follows.user')
-    console.log(profil)
     let followers = await User.find({follows: profil})
     if(profil != null){
         target = {
@@ -70,7 +69,7 @@ export async function getServerSideProps({req,params}) {
             followers: JSON.parse(JSON.stringify(followers)),
             createdAt:JSON.stringify(profil.createdAt)
         } 
-
+        console.log(target)
     }else{
         return {
             redirect: {
