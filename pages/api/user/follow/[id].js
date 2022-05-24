@@ -18,11 +18,11 @@ export default async function handler(req,res){
         try {
 
             let user = await User.findById(id)
-            let connected_user = await User.findById(req.body.user);
+            let connected_user = await User.findById(req.body.user).populate('follows.user');
 
             if (!user || !connected_user) return res.status(401).json({ msg: "user not found" })
 
-            if(connected_user.follows.some(obj => obj._id == id)){
+            if(connected_user.follows.some(obj => obj.user.username == user.username)){
                 const index = connected_user.follows.findIndex(item => item._id == id)
                 connected_user.follows.splice(index,1);
                 connected_user = await connected_user.save()

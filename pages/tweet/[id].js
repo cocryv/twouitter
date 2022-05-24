@@ -25,7 +25,6 @@ export default function username({tweet,connected,user,target}) {
 
 export async function getServerSideProps({req,params}) {
 
-  console.log(params.id)
   await dbConnect()
 
   let connected;
@@ -57,7 +56,6 @@ export async function getServerSideProps({req,params}) {
     user = null;
   }
 
-  console.log(user);
   /* find all the data in our database */
 //   const result = await Tweet.find().populate('user')
 //   const tweets = result.map((tweet) => ({
@@ -79,7 +77,6 @@ export async function getServerSideProps({req,params}) {
          },
          'user'
     ])
-    console.log(data)
     if(data != null){
         tweet = {
             _id: data._id.toString(),

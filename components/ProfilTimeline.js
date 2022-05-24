@@ -18,7 +18,7 @@ const ProfilTimeline = ({target,user}) => {
             setTweets(req.data)
         }
         
-    },[type])
+    },[type,target])
 
     return (
         <>

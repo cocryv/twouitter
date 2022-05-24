@@ -1,8 +1,9 @@
 import React from 'react';
 import MyModal from './headlessui/modal';
 import ProfilTimeline from './ProfilTimeline';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image';
+import axios from 'axios';
 
 const Profil = ({user,target}) => {
 
@@ -10,6 +11,21 @@ const Profil = ({user,target}) => {
     const [bio,setBio] = useState(target.bio)
     const [location,setLocation] = useState(target.location)
     const [profilPicture,setProfilPicture] = useState(target.profilPicture)
+    const [isFollowing,setIsFollowing] = useState(false)
+
+
+    useEffect(()=>{
+        setName(target.name)
+        setBio(target.bio)
+        setLocation(target.location)
+        setProfilPicture(target.profilPicture)
+
+        user.followings.map((item)=>{
+            if(item.user == target._id){
+                setIsFollowing(true)
+            }
+        })
+    },[user])
 
     const updateInfo = (data) => {
         setName(data.name)
@@ -18,7 +34,20 @@ const Profil = ({user,target}) => {
         setProfilPicture(data.profilPicture)
     }
 
-    console.log(target)
+    const handleFollow = () => {
+        axios.post(`/api/user/follow/${target._id}`,
+        {user: user._id}
+        )
+        .then(res=>{
+            console.log(res)
+            if(res.status == 200){
+                isFollowing ? setIsFollowing(false) : setIsFollowing(true)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
 
     return (
         <div className='relative'>
@@ -34,7 +63,7 @@ const Profil = ({user,target}) => {
             
             <div className='flex items-end justify-end mr-4 mt-4'>
                 { user.username != target.username ?
-                    <div className='flex items-center justify-center bg-white text-black font-bold w-20 h-9 rounded-3xl cursor-pointer hover:bg-slate-100'>Follow</div>
+                    <div onClick={handleFollow} className='flex items-center justify-center bg-white text-black font-bold w-20 h-9 rounded-3xl cursor-pointer hover:bg-slate-100'>{isFollowing ? 'Unfollow' : 'Follow'}</div>
                 :
                 <MyModal updateInfo={updateInfo} user={user}/>
                 }
