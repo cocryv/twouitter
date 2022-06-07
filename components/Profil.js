@@ -4,14 +4,17 @@ import ProfilTimeline from './ProfilTimeline';
 import { useState, useEffect } from 'react'
 import Image from 'next/image';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 const Profil = ({user,target}) => {
 
+    const router = useRouter('/A');
     const [name,setName] = useState(target.name)
     const [bio,setBio] = useState(target.bio)
     const [location,setLocation] = useState(target.location)
     const [profilPicture,setProfilPicture] = useState(target.profilPicture)
     const [isFollowing,setIsFollowing] = useState(false)
+    console.log(target)
 
 
     useEffect(()=>{
@@ -83,10 +86,10 @@ const Profil = ({user,target}) => {
                     </div>
                 </div>
                 <div className='flex flex-row mt-4 gap-4'>
-                    <div>
+                <div className='cursor-pointer hover:underline underline-offset-4' onClick={()=>{router.push(`/profil/${target.username}/follow?type=Following`)}}>
                         <span className='font-bold'>{target.followings.length}</span> following
                     </div>
-                    <div>
+                    <div className='cursor-pointer hover:underline underline-offset-4' onClick={()=>{router.push(`/profil/${target.username}/follow?type=Followers`)}}>
                         <span className='font-bold'>{target.followers.length}</span> followers
                     </div>
                 </div>

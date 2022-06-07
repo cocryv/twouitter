@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import React, {useEffect,useState} from 'react';
 import { Oval } from 'react-loader-spinner';
 
@@ -6,9 +7,11 @@ import Tweet from './Tweet';
 import User from './User';
 
 const ProfilFollow = ({target,user}) => {
-
+    const router = useRouter()
     const [tweets,setTweets] = useState('')
-    const [type,setType] = useState('Followers')
+    const [type,setType] = useState(router.query.type)
+
+    console.log(router.query);
 
     return (
         <>
@@ -53,7 +56,7 @@ const ProfilFollow = ({target,user}) => {
                 </div>
                 :
                 user ? target.followers.map(followers => (
-                    <User followers={followers.user} user={user}/>
+                    <User following={followers} user={user}/>
                 )) : 
                 <div className="flex items-center justify-center">
                 <Oval

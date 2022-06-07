@@ -24,7 +24,6 @@ export default function username({connected,user,target}) {
 
 export async function getServerSideProps({req,params}) {
 
-    console.log(params.username)
   await dbConnect()
 
   let connected;
@@ -58,10 +57,7 @@ export async function getServerSideProps({req,params}) {
   }
 
     const profil = await User.findOne({username: params.username }).populate('follows.user')
-    let followers =  await User.find({"follows":{user:profil._id}})
-    todo : followers
-    console.log(followers)
-    console.log(followers)
+    let followers =  await User.find({'follows.user': profil })
     console.log(followers)
     if(profil != null){
         target = {

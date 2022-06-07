@@ -57,7 +57,7 @@ export async function getServerSideProps({req,params}) {
   }
 
     const profil = await User.findOne({username: params.username }).populate('follows.user')
-    let followers = await User.find({follows: profil})
+    let followers =  await User.find({'follows.user': profil })
     if(profil != null){
         target = {
             _id:profil.id,
