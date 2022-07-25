@@ -33,11 +33,7 @@ const Profil = ({user,target}) => {
             </div>}
             
             <div className='flex items-end justify-end mr-4 mt-4'>
-                { user.username != target.username ?
                     <div className='flex items-center justify-center bg-white text-black font-bold w-20 h-9 rounded-3xl cursor-pointer hover:bg-slate-100'>Follow</div>
-                :
-                <MyModal updateInfo={updateInfo} user={user}/>
-                }
             </div>
             <div className="flex flex-col m-6">
                 <div className='text-2xl font-bold'>{name}</div>
