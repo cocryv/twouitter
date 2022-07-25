@@ -17,7 +17,6 @@ const Tweet = ({tweet,user}) => {
             let data = {user: user._id}
             axios.post(`/api/tweet/like/${tweet._id}`,data)
             .then(res => {
-                console.log(res)
                 if(res.status === 200){
                     setLike(res.data.length)
                 }

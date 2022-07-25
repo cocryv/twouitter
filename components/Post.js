@@ -43,7 +43,7 @@ const Post = ({updateTweets,user}) => {
             }
             </div>
              <form className='w-full flex flex-col '>
-                <input ref={bodyInput} className="px-3 py-4 placeholder-white text-white relative bg-twitter-dark rounded text-base outline-none focus:outline-none w-full h-8" type="text" id="tweet" name="tweet" placeholder='What is happening?'/>
+                <input ref={bodyInput} className="px-3 py-4 placeholder-white text-white relative bg-twitter-dark rounded text-base outline-none focus:outline-none w-full h-8" type="text" id="tweet" name="tweet" placeholder='What is happening?' autoComplete='off'/>
                 <div className='flex justify-end pr-4 pt-4'>
                     <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-3xl">
                         Tweet

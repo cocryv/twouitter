@@ -2,15 +2,15 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect } from 'react';
-import Post from '../../components/Post';
-import Timeline from '../../components/Timeline';
-import User from '../../models/User';
-import dbConnect from '../../lib/dbConnect'
+import Post from '../../../components/Post';
+import Timeline from '../../../components/Timeline';
+import User from '../../../models/User';
+import dbConnect from '../../../lib/dbConnect'
 import { useRouter } from 'next/router';
-import verifyToken from '../../lib/verifyToken';
-import Profil from '../../components/Profil';
-import ProfilTimeline from '../../components/ProfilTimeline';
-import Skeleton from '../../components/Skeleton';
+import verifyToken from '../../../lib/verifyToken';
+import Profil from '../../../components/Profil';
+import ProfilTimeline from '../../../components/ProfilTimeline';
+import Skeleton from '../../../components/Skeleton';
 
 export default function username({connected,user,target}) {
 
@@ -37,7 +37,7 @@ export async function getServerSideProps({req,params}) {
     if(payload){
       connected = true;
       let userQuery = await User.findOne({email: payload.username})
-
+      let followers = await User.find({follows: userQuery})
       user = {
         _id:userQuery.id || null,
         name:userQuery.name || null,
@@ -46,6 +46,8 @@ export async function getServerSideProps({req,params}) {
         bio:userQuery.bio || null,
         location:userQuery.location || null,
         profilPicture:userQuery.profilPicture || null,
+        followings: JSON.parse(JSON.stringify(userQuery.follows)),
+        followers: JSON.parse(JSON.stringify(followers)),
         createdAt:JSON.stringify(userQuery.createdAt)
       }
     }
@@ -55,7 +57,7 @@ export async function getServerSideProps({req,params}) {
   }
 
     const profil = await User.findOne({username: params.username }).populate('follows.user')
-    let followers = await User.find({follows: profil})
+    let followers =  await User.find({'follows.user': profil })
     if(profil != null){
         target = {
             _id:profil.id,
@@ -69,7 +71,6 @@ export async function getServerSideProps({req,params}) {
             followers: JSON.parse(JSON.stringify(followers)),
             createdAt:JSON.stringify(profil.createdAt)
         } 
-        console.log(target)
     }else{
         return {
             redirect: {

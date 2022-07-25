@@ -6,12 +6,12 @@ import { serialize } from 'cookie';
 export default async function (req,res){
     const { cookies } = req;
 
-    const jwt = cookies.OursiteJWT;
+    const jwt = cookies.auth;
 
     if(!jwt){
         res.json({message: "ur already logged out"})
     }else{
-        const serialised = serialize("OursiteJWT", null,{
+        const serialised = serialize("auth", null,{
             httpOnly: true,
             secure: process.env.NODE_ENV !== "development",
             sameSite: "strict",

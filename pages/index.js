@@ -71,7 +71,7 @@ export async function getServerSideProps({req}) {
 
   /* find all the data in our database */
   const result = await Tweet.find().sort([['date', -1]]).populate('user')
-  console.log(result)
+
   const tweets = result.map((tweet) => ({
     _id: tweet._id.toString(),
     body: tweet.body,
@@ -85,7 +85,7 @@ export async function getServerSideProps({req}) {
     retweets: JSON.parse(JSON.stringify(tweet.retweets)),
     date: JSON.stringify(tweet.date)
   }))
-  console.log(tweets)
+
 
 
   return {
